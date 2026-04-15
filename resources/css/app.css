@@ -10,6 +10,8 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Fraunces', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
@@ -23,16 +25,55 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    --color-accent: var(--color-teal-700);
+    --color-accent-content: var(--color-teal-700);
     --color-accent-foreground: var(--color-white);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: var(--color-teal-400);
+        --color-accent-content: var(--color-teal-300);
+        --color-accent-foreground: var(--color-stone-950);
+    }
+}
+
+@layer base {
+    .font-display {
+        font-family: var(--font-serif);
+        font-feature-settings: 'ss01', 'ss03';
+        font-variation-settings: 'opsz' 96, 'SOFT' 50;
+        letter-spacing: -0.02em;
+    }
+
+    .font-display-text {
+        font-family: var(--font-serif);
+        font-variation-settings: 'opsz' 14, 'SOFT' 30;
+    }
+
+    .grain {
+        background-image:
+            radial-gradient(circle at 20% 10%, rgba(15, 118, 110, 0.06), transparent 40%),
+            radial-gradient(circle at 80% 90%, rgba(209, 75, 59, 0.04), transparent 40%);
+    }
+
+    .dark .grain {
+        background-image:
+            radial-gradient(circle at 20% 10%, rgba(94, 234, 212, 0.05), transparent 40%),
+            radial-gradient(circle at 80% 90%, rgba(251, 146, 60, 0.04), transparent 40%);
+    }
+
+    .hairline {
+        border-image: linear-gradient(to right, transparent, currentColor, transparent) 1;
+    }
+
+    @keyframes rise {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-rise {
+        animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 }
 
