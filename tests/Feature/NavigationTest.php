@@ -1,5 +1,7 @@
 <?php
 
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+
 test('shorten page loads', function () {
     $this->get('/')->assertOk()->assertSee('Shorten');
 });
