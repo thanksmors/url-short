@@ -12,5 +12,18 @@
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=fraunces:400,500,600,700,900|instrument-sans:400,500,600|jetbrains-mono:400,500,600" rel="stylesheet" />
 
+<script>
+    (function () {
+        const apply = () => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const dark = stored ? stored === 'dark' : prefersDark;
+            document.documentElement.classList.toggle('dark', dark);
+        };
+        apply();
+        document.addEventListener('livewire:navigated', apply);
+    })();
+</script>
+
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @fluxAppearance

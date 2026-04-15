@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-      x-data="{ dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
-      x-init="$watch('dark', v => { localStorage.setItem('theme', v ? 'dark' : 'light'); document.documentElement.classList.toggle('dark', v); });
-              document.documentElement.classList.toggle('dark', dark);"
-      :class="{ 'dark': dark }">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100 min-h-screen antialiased selection:bg-teal-700 selection:text-stone-50">
+    <body class="bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100 min-h-screen antialiased isolate selection:bg-teal-700 selection:text-stone-50"
+          x-data="{
+              dark: document.documentElement.classList.contains('dark'),
+              toggle() {
+                  this.dark = !this.dark;
+                  localStorage.setItem('theme', this.dark ? 'dark' : 'light');
+                  document.documentElement.classList.toggle('dark', this.dark);
+              }
+          }">
         <div class="grain fixed inset-0 pointer-events-none -z-10"></div>
 
-        <header class="border-b border-stone-200/70 dark:border-stone-800/70 backdrop-blur-sm bg-stone-50/80 dark:bg-stone-950/80 sticky top-0 z-20">
+        <header class="border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 sticky top-0 z-30">
             <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-10">
                 <a href="{{ route('shorten') }}" wire:navigate
                    class="flex items-center gap-2.5 group">
@@ -45,7 +49,7 @@
                     @endforeach
 
                     <button type="button"
-                            x-on:click="dark = !dark"
+                            x-on:click="toggle()"
                             :aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
                             class="ml-2 p-2 rounded-full text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 transition">
                         <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
