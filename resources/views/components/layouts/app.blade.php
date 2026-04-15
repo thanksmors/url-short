@@ -63,7 +63,7 @@
             </div>
         </header>
 
-        <flux:main class="relative">
+        <main class="relative">
             @if (session('flash'))
                 <div class="max-w-3xl mx-auto px-6 mt-6 animate-rise">
                     <div class="flex items-start gap-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-900 text-teal-900 dark:text-teal-200 px-4 py-3 rounded-lg">
@@ -76,7 +76,7 @@
             @endif
 
             {{ $slot }}
-        </flux:main>
+        </main>
 
         <footer class="mt-20 border-t border-stone-200/70 dark:border-stone-800/70">
             <div class="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-stone-500 dark:text-stone-500">
