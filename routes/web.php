@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
-Route::view('/', 'pages.shorten-placeholder')->name('shorten');
+Volt::route('/', 'shorten')->name('shorten');
 Route::view('/history', 'pages.history-placeholder')->name('history');
 Route::view('/about', 'pages.about')->name('about');
