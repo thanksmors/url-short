@@ -2,7 +2,9 @@
 
 use App\Http\Requests\StoreLinkRequest;
 use App\Models\Link;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
@@ -12,6 +14,15 @@ new #[Layout('components.layouts.app')] class extends Component {
 
     public function save(): void
     {
+        $key = 'create-link:' . request()->ip();
+        if (RateLimiter::tooManyAttempts($key, 20)) {
+            $seconds = RateLimiter::availableIn($key);
+            throw ValidationException::withMessages([
+                'url' => "Slow down! Try again in {$seconds} seconds.",
+            ]);
+        }
+        RateLimiter::hit($key, 60);
+
         $request = new StoreLinkRequest();
         $validated = $this->validate($request->rules(), $request->messages());
 
